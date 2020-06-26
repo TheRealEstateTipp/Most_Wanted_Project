@@ -13,6 +13,15 @@ function app(people){
       break;
     case 'no':
       // TODO: search by traits
+      let numTraits = prompt("Do you want to search for one trait or many? Enter 'one' for 1 or 'many' for more than one trait");
+      switch(numTraits){
+        case "one":
+          searchByTrait(people);
+          break;
+        case "many":
+        default:
+          app(people);
+      } 
       break;
       default:
     app(people); // restart app
@@ -71,6 +80,60 @@ function searchByName(people){
   return foundPerson;
 }
 
+function searchByTrait(people){
+  console.log('Inside searchByTrait');
+  let traitName = prompt("What type of trait do you want to search for: \ngender \ndob \nheight \nweight \neyeColor \occupation ");
+  let trait = prompt('What trait do you want to search for?');
+
+  switch(traitName){
+    case "gender":
+     traitName = "gender";
+     let result = filterByTrait(people,traitName, trait);
+     displayPeople(result);
+     break;
+    case "dob":
+      traitName="dob";
+      result = filterByTrait(people,traitName, trait);
+      displayPeople(result);
+      break;
+    case "height":
+      traitName="height";
+      result = filterByTrait(people,traitName, trait);
+      displayPeople(result);
+      break;
+    case "weight":
+      traitName="weight";
+      result = filterByTrait(people,traitName, trait);
+      displayPeople(result);
+      break;
+    case "eyeColor":
+      traitName="eyeColor"
+      result = filterByTrait(people,traitName, trait);
+      displayPeople(result);
+      break;
+    case "occupation":
+      traitName="occupation"
+      result = filterByTrait(people,traitName, trait);
+      displayPeople(result);
+      break;
+    default:
+      app(people);
+  }
+  return result;
+
+}
+
+function filterByTrait(people, traitName, trait){
+  let foundPerson = people.filter(function(person){
+    if (person[traitName] === trait){
+      return true;
+    }
+    else{
+      return false;
+    }
+  });
+  return foundPerson;
+}
 // alerts a list of people
 function displayPeople(people){
   alert(people.map(function(person){
