@@ -13,12 +13,14 @@ function app(people){
       break;
     case 'no':
       // TODO: search by traits
-      let numTraits = promptFor("Do you want to search for one trait or many? Enter 'one' for 1 or 'many' for more than one trait",chars);
+      let numTraits = promptFor("Do you want to search for one trait or many? Enter 'one' for 1 or 'many' for more than one trait", chars);
       switch(numTraits){
         case "one":
-          searchByTrait(people);
+          searchResults = searchByTrait(people);
           break;
         case "many":
+          searchResults = searchByTraits(people);
+          break;
         default:
           app(people);
       } 
@@ -42,7 +44,7 @@ function mainMenu(person, people){
     return app(people); // restart
   }
 
-  let displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
+  let displayOption = prompt("Found " + person[0].firstName + " " + person[0].lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
 
   switch(displayOption){
     case "info":
@@ -84,11 +86,12 @@ function searchByTrait(people){
  
   let traitName = promptFor("What type of trait do you want to search for: \ngender \ndob \nheight \nweight \neyeColor \noccupation ", chars);
   let trait = promptFor('What trait do you want to search for?', chars);
+  let result;
 
   switch(traitName){
     case "gender":
      traitName = "gender";
-     let result = filterByTrait(people,traitName, trait);
+     result = filterByTrait(people,traitName, trait);
      displayPeople(result);
      break;
     case "dob":
@@ -119,9 +122,37 @@ function searchByTrait(people){
     default:
       app(people);
   }
+
   return result;
 
 }
+
+function searchByTraits(people){
+  
+  let result;
+  for(let i = 0; i < 5; i++){
+      result = searchByTrait(people);
+  
+    
+    if(result.length == 1){
+        return result;
+    }
+
+    if (i >=1){
+        displayPeople(result);
+        let searchAgain = promptFor("Would you like narrow down your search by entering an additional trait?", yesNo).toLowerCase();
+        if(searchAgain === "no"){
+           break;
+        }
+
+        
+    }
+    people = result;
+  }
+
+}
+        
+
 
 function filterByTrait(people, traitName, trait){
   let foundPerson = people.filter(function(person){
@@ -134,6 +165,7 @@ function filterByTrait(people, traitName, trait){
   });
   return foundPerson;
 }
+
 // alerts a list of people
 function displayPeople(people){
   alert(people.map(function(person){
@@ -182,3 +214,4 @@ function chars(input){
     return false;
   }
 }
+
