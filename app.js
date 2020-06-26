@@ -17,9 +17,6 @@ function app(people){
       let numTraits = promptFor("Do you want to search for one trait or many? Enter 'one' for 1 or 'many' for more than one trait", chars);
       switch(numTraits){
         case "one":
-<<<<<<< HEAD
-          searchResults = searchByTrait(people);
-=======
            let returnedTraits = searchByTrait(people);
            let count = returnedTraits.length;
            if (returnedTraits.length >1){
@@ -27,7 +24,6 @@ function app(people){
             console.log('Person ${person}');
              mainMenu(person,people)
            }
->>>>>>> 3486c0926301a7b005a68d340cb882340057343a
           break;
         case "many":
           searchResults = searchByTraits(people);
@@ -139,12 +135,7 @@ function searchByTrait(people){
     default:
       app(people);
   }
-<<<<<<< HEAD
-
-  return result;
-=======
   
->>>>>>> 3486c0926301a7b005a68d340cb882340057343a
 
 }
 
