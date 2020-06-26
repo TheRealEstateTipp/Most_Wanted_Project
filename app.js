@@ -100,7 +100,22 @@ function yesNo(input){
   return input.toLowerCase() == "yes" || input.toLowerCase() == "no";
 }
 
-// helper function to pass in as default promptFor validation
+// keep calling itself until no more parents are found
+function findDescendants(people, person){
+
+
+}
+
+// only letters are accepted as input
 function chars(input){
-  return true; // default validation only
+  var letters = /^[A-Za-z]+$/;
+  if(input.match(letters))
+  {
+    return true;
+  }
+  else
+  {
+    alert("Invalid input.")
+    return false;
+  }
 }
