@@ -6,6 +6,7 @@ Build all of your functions for displaying and gathering information below (GUI)
 // app is the function called to start the entire application
 function app(people){
   let searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
+  console.log('searchType ${searchType}')
   let searchResults;
   switch(searchType){
     case 'yes':
@@ -16,7 +17,13 @@ function app(people){
       let numTraits = promptFor("Do you want to search for one trait or many? Enter 'one' for 1 or 'many' for more than one trait",chars);
       switch(numTraits){
         case "one":
-          searchByTrait(people);
+           let returnedTraits = searchByTrait(people);
+           let count = returnedTraits.length;
+           if (returnedTraits.length >1){
+            let person =  searchByName(returnedTraits);
+            console.log('Person ${person}');
+             mainMenu(person,people)
+           }
           break;
         case "many":
         default:
@@ -42,11 +49,11 @@ function mainMenu(person, people){
     return app(people); // restart
   }
 
-  let displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
+  let displayOption = prompt("Found " + person[0].firstName + " " + person[0].lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
 
   switch(displayOption){
     case "info":
-    // TODO: get person's info
+    alert("First Name: " +  person[0].firstName + "\n" + "Last Name " +  person[0].lastName + "\n" + "Gender: " + person[0].gender + "\n" + "Date of Birth: " + person[0].dob  + "\n" + "Height: " + person[0].height + "\n" + "Weight: " + person[0].weight + "\n" + "Eye Color: " + person[0].eyeColor + "\n" + "Occupation: " + person[0].occupation );
     break;
     case "family":
     // TODO: get person's family
@@ -90,36 +97,42 @@ function searchByTrait(people){
      traitName = "gender";
      let result = filterByTrait(people,traitName, trait);
      displayPeople(result);
+     return result;
      break;
     case "dob":
       traitName="dob";
       result = filterByTrait(people,traitName, trait);
       displayPeople(result);
+      return result;
       break;
     case "height":
       traitName="height";
       result = filterByTrait(people,traitName, trait);
       displayPeople(result);
+      return result;
       break;
     case "weight":
       traitName="weight";
       result = filterByTrait(people,traitName, trait);
       displayPeople(result);
+      return result;
       break;
     case "eyeColor":
       traitName="eyeColor"
       result = filterByTrait(people,traitName, trait);
       displayPeople(result);
+      return result;
       break;
     case "occupation":
       traitName="occupation"
       result = filterByTrait(people,traitName, trait);
       displayPeople(result);
+      return result;
       break;
     default:
       app(people);
   }
-  return result;
+  
 
 }
 
