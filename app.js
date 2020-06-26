@@ -81,7 +81,7 @@ function searchByName(people){
 }
 
 function searchByTrait(people){
-  console.log('Inside searchByTrait');
+ 
   let traitName = prompt("What type of trait do you want to search for: \ngender \ndob \nheight \nweight \neyeColor \occupation ");
   let trait = prompt('What trait do you want to search for?');
 
