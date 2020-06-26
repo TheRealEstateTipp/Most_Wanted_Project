@@ -13,7 +13,7 @@ function app(people){
       break;
     case 'no':
       // TODO: search by traits
-      let numTraits = prompt("Do you want to search for one trait or many? Enter 'one' for 1 or 'many' for more than one trait");
+      let numTraits = promptFor("Do you want to search for one trait or many? Enter 'one' for 1 or 'many' for more than one trait",chars);
       switch(numTraits){
         case "one":
           searchByTrait(people);
@@ -82,8 +82,8 @@ function searchByName(people){
 
 function searchByTrait(people){
  
-  let traitName = prompt("What type of trait do you want to search for: \ngender \ndob \nheight \nweight \neyeColor \occupation ");
-  let trait = prompt('What trait do you want to search for?');
+  let traitName = promptFor("What type of trait do you want to search for: \ngender \ndob \nheight \nweight \neyeColor \noccupation ", chars);
+  let trait = promptFor('What trait do you want to search for?', chars);
 
   switch(traitName){
     case "gender":
