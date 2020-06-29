@@ -143,13 +143,13 @@ function searchByTraits(people){
         return result;
     }
 
-    if (i >=1){
+    if (i > 1){
         let searchAgain = promptFor("Would you like to narrow down your search by entering an additional trait?", yesNo).toLowerCase();
         if(searchAgain === "no"){
-            searchByName(result);
-            return result;
+            return searchByName(result);
         }
     }
+
     people = result;
   }
 
