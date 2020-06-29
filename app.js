@@ -61,8 +61,8 @@ function mainMenu(person, people){
     // TODO: get person's family
     break;
     case "descendants":
-      let arrayOfFoundDescendants;
-    alert(findDescendants(people,person,arrayOfFoundDescendants));
+      let arrayOfFoundDescendants = [];
+      displayPeople(findDescendants(people,person[0],arrayOfFoundDescendants));
     break;
     case "restart":
     app(people); // restart
