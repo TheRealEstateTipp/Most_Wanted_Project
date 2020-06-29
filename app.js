@@ -17,12 +17,11 @@ function app(people){
       let numTraits = promptFor("Do you want to search for one trait or many? Enter 'one' for 1 or 'many' for more than one trait", chars);
       switch(numTraits){
         case "one":
-           let returnedTraits = searchByTrait(people);
-           let count = returnedTraits.length;
-           if (returnedTraits.length >1){
-            let person =  searchByName(returnedTraits);
-            console.log('Person ${person}');
-             mainMenu(person,people)
+           let arrayOfPeople = searchByTrait(people);
+           
+           if (arrayOfPeople.length >1){
+              let person =  searchByName(arrayOfPeople);
+              mainMenu(person,people)
            }
           break;
         case "many":
@@ -52,13 +51,17 @@ function mainMenu(person, people){
   }
 
   let displayOption = prompt("Found " + person[0].firstName + " " + person[0].lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
-
+let sibling;
+let spouse;
+let parents;
   switch(displayOption){
     case "info":
-    alert("First Name: " +  person[0].firstName + "\n" + "Last Name " +  person[0].lastName + "\n" + "Gender: " + person[0].gender + "\n" + "Date of Birth: " + person[0].dob  + "\n" + "Height: " + person[0].height + "\n" + "Weight: " + person[0].weight + "\n" + "Eye Color: " + person[0].eyeColor + "\n" + "Occupation: " + person[0].occupation );
+    displayPerson(person);
     break;
     case "family":
-    // TODO: get person's family
+
+     
+      
     break;
     case "descendants":
       let arrayOfFoundDescendants = [];
@@ -197,6 +200,7 @@ function displayPerson(person){
   let personInfo = "First Name: " + person[0].firstName + "\n";
   personInfo += "Last Name: " + person[0].lastName + "\n";
   // TODO: finish getting the rest of the information to display
+  personInfo += "Gender: " + person[0].gender + "\n" + "Date of Birth: " + person[0].dob  + "\n" + "Height: " + person[0].height + "\n" + "Weight: " + person[0].weight + "\n" + "Eye Color: " + person[0].eyeColor + "\n" + "Occupation: " + person[0].occupation;
   alert(personInfo);
 }
 
