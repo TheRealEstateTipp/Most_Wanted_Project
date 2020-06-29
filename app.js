@@ -17,16 +17,18 @@ function app(people){
       let numTraits = promptFor("Do you want to search for one trait or many? Enter 'one' for 1 or 'many' for more than one trait", chars);
       switch(numTraits){
         case "one":
-           let arrayOfPeople = searchByTrait(people);
+           searchResults = searchByTrait(people);
            
-           if (arrayOfPeople.length >1){
-              let person =  searchByName(arrayOfPeople);
-              mainMenu(person,people)
+           if (searchResults.length >1){
+              searchResults =  searchByName(searchResults);
            }
+
           break;
+
         case "many":
           searchResults = searchByTraits(people);
           break;
+
         default:
           app(people);
       } 
@@ -45,7 +47,7 @@ function mainMenu(person, people){
 
   /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people. We need people in order to find descendants and other information that the user may want. */
 
-  if(!person[0]){
+  if(!person){
     alert("Could not find that individual.");
     return app(people); // restart
   }
