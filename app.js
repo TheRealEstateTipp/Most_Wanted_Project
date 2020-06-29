@@ -56,25 +56,22 @@ function mainMenu(person, people){
 
   switch(displayOption){
     case "info":
-    displayPerson(person);
-    return mainMenu(person, people);
-    break;
+      displayPerson(person);
+      return mainMenu(person, people);
     case "family":
-     getFamily(person,people);
-     return mainMenu(person, people);
-    break;
+      getFamily(person,people);
+      return mainMenu(person, people);
     case "descendants":
       let arrayOfFoundDescendants = [];
       displayPeople(findDescendants(people,person[0],arrayOfFoundDescendants));
       return mainMenu(person, people);
-    break;
     case "restart":
-    app(people); // restart
-    break;
+      app(people); // restart
+      break;
     case "quit":
-    return; // stop execution
+      return; // stop execution
     default:
-    return mainMenu(person, people); // ask again
+      return mainMenu(person, people); // ask again
   }
 }
 
@@ -96,7 +93,7 @@ function searchByName(people){
 
 function searchByTrait(people){
  
-  let traitName = promptFor("What type of trait do you want to search for: \ngender \ndob \nheight \nweight \neyeColor \noccupation", chars);
+  let traitName = promptFor("What type of trait do you want to search for: \ngender \ndob \nheight \nweight \neye color \noccupation", chars).toLowerCase();
   let trait;
   let result;
 
@@ -104,50 +101,34 @@ function searchByTrait(people){
     case "gender":
      traitName = "gender";
      trait = promptFor('Male or female?', chars);
-     result = filterByTrait(people,traitName, trait);
-     displayPeople(result);
-     
      break;
     case "dob":
       traitName="dob";
       trait = promptFor('Please enter a date of birth. (mm/dd/yyyy)', date);
-      result = filterByTrait(people,traitName, trait);
-      displayPeople(result);
-     
       break;
     case "height":
       traitName="height";
       trait = promptFor('Please enter a height in inches.', nums);
-      result = filterByTrait(people,traitName, trait);
-      displayPeople(result);
-     
       break;
     case "weight":
       traitName="weight";
       trait = promptFor('Please enter a weight in pounds.', nums);
-      result = filterByTrait(people,traitName, trait);
-      displayPeople(result);
-     
       break;
-    case "eyeColor":
+    case "eye color":
       traitName="eyeColor"
       trait = promptFor('Please enter an eye color.', chars);
-      result = filterByTrait(people,traitName, trait);
-      displayPeople(result);
-     
       break;
     case "occupation":
       traitName="occupation"
       trait = promptFor('Please enter an occupation.', chars);
-      result = filterByTrait(people,traitName, trait);
-      displayPeople(result);
-     
       break;
     default:
       app(people);
+    }
 
-      return result;
-  }
+    result = filterByTrait(people, traitName, trait);
+    displayPeople(result);
+    return result;
   
 }
 
@@ -163,24 +144,20 @@ function searchByTraits(people){
     }
 
     if (i >=1){
-        displayPeople(result);
         let searchAgain = promptFor("Would you like to narrow down your search by entering an additional trait?", yesNo).toLowerCase();
         if(searchAgain === "no"){
             searchByName(result);
             return result;
         }
-
     }
     people = result;
   }
 
 }
         
-
-
 function filterByTrait(people, traitName, trait){
   let foundPerson = people.filter(function(person){
-    if (person[traitName] === trait){
+    if (person[traitName] == trait){
       return true;
     }
     else{
@@ -244,7 +221,7 @@ function findDescendants(people, person, arrayOfFoundDescendants)
 
 // only letters are accepted as input
 function chars(input){
-  var letters = /^[A-Za-z]+$/;
+  var letters = /^[A-Za-z ]+$/;
   if(input.match(letters))
   {
     return true;
