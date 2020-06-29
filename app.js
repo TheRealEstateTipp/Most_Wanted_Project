@@ -52,13 +52,16 @@ function mainMenu(person, people){
   }
 
   let displayOption = prompt("Found " + person[0].firstName + " " + person[0].lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
-
+let sibling;
+let spouse;
   switch(displayOption){
     case "info":
     alert("First Name: " +  person[0].firstName + "\n" + "Last Name " +  person[0].lastName + "\n" + "Gender: " + person[0].gender + "\n" + "Date of Birth: " + person[0].dob  + "\n" + "Height: " + person[0].height + "\n" + "Weight: " + person[0].weight + "\n" + "Eye Color: " + person[0].eyeColor + "\n" + "Occupation: " + person[0].occupation );
     break;
     case "family":
-    // TODO: get person's family
+
+      
+      
     break;
     case "descendants":
     // TODO: get person's descendants
