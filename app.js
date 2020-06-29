@@ -3,8 +3,10 @@
 Build all of your functions for displaying and gathering information below (GUI).
 */
 
+let arrayOfTraits = ["\ngender","\ndob","\nheight","\nweight","\neye color","\noccupation"];
 // app is the function called to start the entire application
 function app(people){
+  arrayOfTraits = ["\ngender","\ndob","\nheight","\nweight","\neye color","\noccupation"];
   let searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
  
   let searchResults;
@@ -18,13 +20,10 @@ function app(people){
       switch(numTraits){
         case "one":
            searchResults = searchByTrait(people);
-           
            if (searchResults.length >1){
               searchResults =  searchByName(searchResults);
            }
-
           break;
-
         case "many":
           searchResults = searchByTraits(people);
           break;
@@ -87,17 +86,16 @@ function searchByName(people){
       return false;
     }
   })
-  // TODO: find the person using the name they entered
   return foundPerson;
 }
 
 function searchByTrait(people){
- 
-  let traitName = promptFor("What type of trait do you want to search for: \ngender \ndob \nheight \nweight \neye color \noccupation", chars).toLowerCase();
+  let traitChoice = promptFor("What type of trait do you want to search for: " + arrayOfTraits.join(), chars).toLowerCase();
+  let traitName;
   let trait;
   let result;
 
-  switch(traitName){
+  switch(traitChoice){
     case "gender":
      traitName = "gender";
      trait = promptFor('Male or female?', chars);
@@ -126,6 +124,15 @@ function searchByTrait(people){
       app(people);
     }
 
+    arrayOfTraits = arrayOfTraits.filter(function(currentTrait){
+      if (currentTrait == "\n" + traitChoice){
+        return false;
+      }
+      else{
+        return true;
+      }
+    });
+      
     result = filterByTrait(people, traitName, trait);
     if(result.length != 0){
       displayPeople(result);
@@ -138,12 +145,6 @@ function searchByTraits(people){
   
   let result;
   for(let i = 0; i < 5; i++){
-      result = searchByTrait(people);
-  
-    
-    if(result.length == 1){
-        return result;
-    }
 
     if (i > 1){
         let searchAgain = promptFor("Would you like to narrow down your search by entering an additional trait?", yesNo).toLowerCase();
@@ -151,6 +152,13 @@ function searchByTraits(people){
             return searchByName(result);
         }
     }
+      result = searchByTrait(people);
+  
+    
+    if(result.length == 1){
+        return result;
+    }
+
 
     if(result.length == 0){
       alert("No results found.");
