@@ -37,12 +37,12 @@ function mainMenu(person, people){
 
   /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people. We need people in order to find descendants and other information that the user may want. */
 
-  if(!person){
+  if(!person[0]){
     alert("Could not find that individual.");
     return app(people); // restart
   }
 
-  let displayOption = prompt("Found " + person.firstName + " " + person.lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
+  let displayOption = prompt("Found " + person[0].firstName + " " + person[0].lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
 
   switch(displayOption){
     case "info":
@@ -52,7 +52,8 @@ function mainMenu(person, people){
     // TODO: get person's family
     break;
     case "descendants":
-    // TODO: get person's descendants
+      let arrayOfFoundDescendants;
+    alert(findDescendants(people,person,arrayOfFoundDescendants));
     break;
     case "restart":
     app(people); // restart
@@ -144,8 +145,8 @@ function displayPeople(people){
 function displayPerson(person){
   // print all of the information about a person:
   // height, weight, age, name, occupation, eye color.
-  let personInfo = "First Name: " + person.firstName + "\n";
-  personInfo += "Last Name: " + person.lastName + "\n";
+  let personInfo = "First Name: " + person[0].firstName + "\n";
+  personInfo += "Last Name: " + person[0].lastName + "\n";
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
 }
@@ -163,10 +164,26 @@ function yesNo(input){
   return input.toLowerCase() == "yes" || input.toLowerCase() == "no";
 }
 
-// keep calling itself until no more parents are found
-function findDescendants(people, person){
 
+//return findDescendants(people, currentPerson, arrayOfFoundDescendants);
+// if within the array of people, the parameter of person A's id matches another person B's parent id
+// recursively call the function to see if person B is someone else's parent until no more is found.
+function findDescendants(people, person, arrayOfFoundDescendants)
+{
+  people.forEach(function(currentPerson)
+  {
+    currentPerson.parents.forEach(function(currentPersonParents)
+    {
+      if(currentPersonParents === person.id)
+      {
+        arrayOfFoundDescendants.push(currentPerson);
+        findDescendants(people, currentPerson, arrayOfFoundDescendants);
+      }
 
+    });
+      
+  });
+      return arrayOfFoundDescendants;
 }
 
 // only letters are accepted as input
