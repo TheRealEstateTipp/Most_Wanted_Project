@@ -136,7 +136,6 @@ function searchByTrait(people){
       app(people);
   }
   
-
 }
 
 function searchByTraits(people){
@@ -154,10 +153,10 @@ function searchByTraits(people){
         displayPeople(result);
         let searchAgain = promptFor("Would you like narrow down your search by entering an additional trait?", yesNo).toLowerCase();
         if(searchAgain === "no"){
-           break;
+            searchByName(result);
+            return result;
         }
 
-        
     }
     people = result;
   }
