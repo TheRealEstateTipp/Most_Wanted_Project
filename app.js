@@ -6,6 +6,7 @@ Build all of your functions for displaying and gathering information below (GUI)
 // app is the function called to start the entire application
 function app(people){
   let searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
+  console.log('searchType ${searchType}')
   let searchResults;
   switch(searchType){
     case 'yes':
@@ -13,12 +14,20 @@ function app(people){
       break;
     case 'no':
       // TODO: search by traits
-      let numTraits = promptFor("Do you want to search for one trait or many? Enter 'one' for 1 or 'many' for more than one trait",chars);
+      let numTraits = promptFor("Do you want to search for one trait or many? Enter 'one' for 1 or 'many' for more than one trait", chars);
       switch(numTraits){
         case "one":
-          searchByTrait(people);
+           let returnedTraits = searchByTrait(people);
+           let count = returnedTraits.length;
+           if (returnedTraits.length >1){
+            let person =  searchByName(returnedTraits);
+            console.log('Person ${person}');
+             mainMenu(person,people)
+           }
           break;
         case "many":
+          searchResults = searchByTraits(people);
+          break;
         default:
           app(people);
       } 
@@ -46,7 +55,7 @@ function mainMenu(person, people){
 
   switch(displayOption){
     case "info":
-    // TODO: get person's info
+    alert("First Name: " +  person[0].firstName + "\n" + "Last Name " +  person[0].lastName + "\n" + "Gender: " + person[0].gender + "\n" + "Date of Birth: " + person[0].dob  + "\n" + "Height: " + person[0].height + "\n" + "Weight: " + person[0].weight + "\n" + "Eye Color: " + person[0].eyeColor + "\n" + "Occupation: " + person[0].occupation );
     break;
     case "family":
     // TODO: get person's family
@@ -85,44 +94,77 @@ function searchByTrait(people){
  
   let traitName = promptFor("What type of trait do you want to search for: \ngender \ndob \nheight \nweight \neyeColor \noccupation ", chars);
   let trait = promptFor('What trait do you want to search for?', chars);
+  let result;
 
   switch(traitName){
     case "gender":
      traitName = "gender";
-     let result = filterByTrait(people,traitName, trait);
+     result = filterByTrait(people,traitName, trait);
      displayPeople(result);
+     return result;
      break;
     case "dob":
       traitName="dob";
       result = filterByTrait(people,traitName, trait);
       displayPeople(result);
+      return result;
       break;
     case "height":
       traitName="height";
       result = filterByTrait(people,traitName, trait);
       displayPeople(result);
+      return result;
       break;
     case "weight":
       traitName="weight";
       result = filterByTrait(people,traitName, trait);
       displayPeople(result);
+      return result;
       break;
     case "eyeColor":
       traitName="eyeColor"
       result = filterByTrait(people,traitName, trait);
       displayPeople(result);
+      return result;
       break;
     case "occupation":
       traitName="occupation"
       result = filterByTrait(people,traitName, trait);
       displayPeople(result);
+      return result;
       break;
     default:
       app(people);
   }
-  return result;
+  
+}
+
+function searchByTraits(people){
+  
+  let result;
+  for(let i = 0; i < 5; i++){
+      result = searchByTrait(people);
+  
+    
+    if(result.length == 1){
+        return result;
+    }
+
+    if (i >=1){
+        displayPeople(result);
+        let searchAgain = promptFor("Would you like to narrow down your search by entering an additional trait?", yesNo).toLowerCase();
+        if(searchAgain === "no"){
+            searchByName(result);
+            return result;
+        }
+
+    }
+    people = result;
+  }
 
 }
+        
+
 
 function filterByTrait(people, traitName, trait){
   let foundPerson = people.filter(function(person){
@@ -135,6 +177,7 @@ function filterByTrait(people, traitName, trait){
   });
   return foundPerson;
 }
+
 // alerts a list of people
 function displayPeople(people){
   alert(people.map(function(person){
@@ -199,3 +242,4 @@ function chars(input){
     return false;
   }
 }
+
