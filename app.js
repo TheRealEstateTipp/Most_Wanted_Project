@@ -243,3 +243,17 @@ function chars(input){
   }
 }
 
+// only numbers are accepted as input
+function nums(input){
+  var numbers = /^[0-9]+$/;
+  if(input.match(numbers))
+  {
+    return true;
+  }
+  else
+  {
+    alert("Invalid input.")
+    return false;
+  }
+}
+
