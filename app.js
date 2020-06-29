@@ -151,7 +151,7 @@ function searchByTraits(people){
 
     if (i >=1){
         displayPeople(result);
-        let searchAgain = promptFor("Would you like narrow down your search by entering an additional trait?", yesNo).toLowerCase();
+        let searchAgain = promptFor("Would you like to narrow down your search by entering an additional trait?", yesNo).toLowerCase();
         if(searchAgain === "no"){
             searchByName(result);
             return result;
