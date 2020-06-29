@@ -6,7 +6,7 @@ Build all of your functions for displaying and gathering information below (GUI)
 // app is the function called to start the entire application
 function app(people){
   let searchType = promptFor("Do you know the name of the person you are looking for? Enter 'yes' or 'no'", yesNo).toLowerCase();
-  console.log('searchType ${searchType}')
+ 
   let searchResults;
   switch(searchType){
     case 'yes':
@@ -53,15 +53,13 @@ function mainMenu(person, people){
   }
 
   let displayOption = prompt("Found " + person[0].firstName + " " + person[0].lastName + " . Do you want to know their 'info', 'family', or 'descendants'? Type the option you want or 'restart' or 'quit'");
-let sibling;
-let spouse;
-let parents;
+
   switch(displayOption){
     case "info":
     displayPerson(person);
     break;
     case "family":
-
+     getFamily(person,people);
      
       
     break;
@@ -283,5 +281,60 @@ function date(input){
     alert("Invalid input.")
     return false;
   }
+}
+
+function getFamily(person, people){
+let sibling;
+let spouse;
+let parents;
+
+if (typeof(person[0].parents) !="undefined"){
+  sibling = people.filter(function (individual){
+   
+    if (typeof(person[0].parents) != "undefined"){
+      //got to finda a way to not find person object
+    if (person[0].parents[0] === individual.parents[0]
+       && person[0].id != individual.id){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+  });
+  
+}
+
+if (person[0].currentSpouse != null){
+   spouse = people.filter(function(individual){
+    if (person[0].currentSpouse === individual.id){
+      return true;
+    }
+    else{
+      return false;
+    }
+  });
+}
+
+if (typeof(person[0].parents) != "undefined"){
+  parents = people.filter(function(individual){
+    if (person[0].parents[0] === individual.currentSpouse || person[0].parents[0] === individual.id){
+      return true;
+    }
+      else{
+        return false;
+      }
+   
+  });
+}
+
+let arrayOfPeople = [];
+for(let i =0; i < sibling.length; i++){
+  arrayOfPeople.push(sibling[i]);
+}
+for (let i =0; i < parents.length; i++ ){
+ arrayOfPeople.push(parents[i])
+}
+displayPeople(arrayOfPeople);
 }
 
