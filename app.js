@@ -57,15 +57,16 @@ function mainMenu(person, people){
   switch(displayOption){
     case "info":
     displayPerson(person);
+    return mainMenu(person, people);
     break;
     case "family":
      getFamily(person,people);
-     
-      
+     return mainMenu(person, people);
     break;
     case "descendants":
       let arrayOfFoundDescendants = [];
       displayPeople(findDescendants(people,person[0],arrayOfFoundDescendants));
+      return mainMenu(person, people);
     break;
     case "restart":
     app(people); // restart
