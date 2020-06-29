@@ -193,7 +193,7 @@ function filterByTrait(people, traitName, trait){
 // alerts a list of people
 function displayPeople(people){
   alert(people.map(function(person){
-    if(person.relation != "undefined"){ 
+    if('relation' in people){ 
       return  person.firstName + " " + person.lastName + " " + person.relation;
     }
     else{
