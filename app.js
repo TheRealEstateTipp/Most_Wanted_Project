@@ -107,45 +107,47 @@ function searchByTrait(people){
      trait = promptFor('Male or female?', chars);
      result = filterByTrait(people,traitName, trait);
      displayPeople(result);
-     return result;
+     
      break;
     case "dob":
       traitName="dob";
       trait = promptFor('Please enter a date of birth. (mm/dd/yyyy)', date);
       result = filterByTrait(people,traitName, trait);
       displayPeople(result);
-      return result;
+     
       break;
     case "height":
       traitName="height";
       trait = promptFor('Please enter a height in inches.', nums);
       result = filterByTrait(people,traitName, trait);
       displayPeople(result);
-      return result;
+     
       break;
     case "weight":
       traitName="weight";
       trait = promptFor('Please enter a weight in pounds.', nums);
       result = filterByTrait(people,traitName, trait);
       displayPeople(result);
-      return result;
+     
       break;
     case "eyeColor":
       traitName="eyeColor"
       trait = promptFor('Please enter an eye color.', chars);
       result = filterByTrait(people,traitName, trait);
       displayPeople(result);
-      return result;
+     
       break;
     case "occupation":
       traitName="occupation"
       trait = promptFor('Please enter an occupation.', chars);
       result = filterByTrait(people,traitName, trait);
       displayPeople(result);
-      return result;
+     
       break;
     default:
       app(people);
+
+      return result;
   }
   
 }
