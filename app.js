@@ -170,7 +170,14 @@ function filterByTrait(people, traitName, trait){
 // alerts a list of people
 function displayPeople(people){
   alert(people.map(function(person){
-    return person.firstName + " " + person.lastName;
+    if('relation' in people){ 
+      return  person.firstName + " " + person.lastName + " " + person.relation;
+    }
+    else{
+      return person.firstName + " " + person.lastName;
+    }
+    return
+     
   }).join("\n"));
 }
 
@@ -273,12 +280,14 @@ if (typeof(person[0].parents) !="undefined"){
       //got to finda a way to not find person object
     if (person[0].parents[0] === individual.parents[0]
        && person[0].id != individual.id){
+      
       return true;
     }
     else{
       return false;
     }
   }
+ 
   });
   
 }
@@ -287,6 +296,7 @@ if (person[0].currentSpouse != null){
    spouse = people.filter(function(individual){
     if (person[0].currentSpouse === individual.id){
       return true;
+
     }
     else{
       return false;
@@ -308,11 +318,18 @@ if (typeof(person[0].parents) != "undefined"){
 
 let arrayOfPeople = [];
 for(let i =0; i < sibling.length; i++){
+  sibling[i].relation = "sibling";
   arrayOfPeople.push(sibling[i]);
 }
 for (let i =0; i < parents.length; i++ ){
+  parents[i].relation = "parent";
  arrayOfPeople.push(parents[i])
 }
+
+for (let i =0; i < spouse.length; i++ ){
+  spouse[i].relation = "spouse";
+}
+
 displayPeople(arrayOfPeople);
 }
 
