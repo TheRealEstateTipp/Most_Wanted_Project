@@ -46,7 +46,7 @@ function mainMenu(person, people){
 
   /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people. We need people in order to find descendants and other information that the user may want. */
 
-  if(!person){
+  if(!person[0]){
     alert("Could not find that individual.");
     return app(people); // restart
   }
@@ -143,7 +143,7 @@ function searchByTrait(people){
 
 function searchByTraits(people){
   
-  let result;
+  let result = people;
   for(let i = 0; i < 5; i++){
 
     if (i > 1){
@@ -152,7 +152,7 @@ function searchByTraits(people){
             return searchByName(result);
         }
     }
-      result = searchByTrait(people);
+      result = searchByTrait(result);
   
     
     if(result.length == 1){
@@ -164,8 +164,6 @@ function searchByTraits(people){
       alert("No results found.");
       app(people);
     }
-
-    people = result;
   }
 
 }
