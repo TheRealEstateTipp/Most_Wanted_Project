@@ -271,7 +271,7 @@ function nums(input){
 
 //only dates are accepted as input
 function date(input){
-  var date = /^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d+$/;
+  var date = /\d{1,2}\/\d{1,2}\/\d{4}/;
   if(input.match(date))
   {
     return true;
