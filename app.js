@@ -127,7 +127,9 @@ function searchByTrait(people){
     }
 
     result = filterByTrait(people, traitName, trait);
-    displayPeople(result);
+    if(result.length != 0){
+      displayPeople(result);
+    }
     return result;
   
 }
@@ -148,6 +150,11 @@ function searchByTraits(people){
         if(searchAgain === "no"){
             return searchByName(result);
         }
+    }
+
+    if(result.length == 0){
+      alert("No results found.");
+      app(people);
     }
 
     people = result;
