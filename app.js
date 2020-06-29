@@ -46,7 +46,7 @@ function mainMenu(person, people){
 
   /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people. We need people in order to find descendants and other information that the user may want. */
 
-  if(!person[0]){
+  if(!person){
     alert("Could not find that individual.");
     return app(people); // restart
   }
@@ -265,7 +265,7 @@ function nums(input){
 
 //only dates are accepted as input
 function date(input){
-  var date = /^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d+$/;
+  var date = /\d{1,2}\/\d{1,2}\/\d{4}/;
   if(input.match(date))
   {
     return true;
