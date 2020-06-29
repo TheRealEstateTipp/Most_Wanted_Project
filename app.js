@@ -46,7 +46,7 @@ function mainMenu(person, people){
 
   /* Here we pass in the entire person object that we found in our search, as well as the entire original dataset of people. We need people in order to find descendants and other information that the user may want. */
 
-  if(!person){
+  if(!person[0]){
     alert("Could not find that individual.");
     return app(people); // restart
   }
@@ -64,7 +64,8 @@ let spouse;
       
     break;
     case "descendants":
-    // TODO: get person's descendants
+      let arrayOfFoundDescendants = [];
+      displayPeople(findDescendants(people,person[0],arrayOfFoundDescendants));
     break;
     case "restart":
     app(people); // restart
@@ -94,43 +95,49 @@ function searchByName(people){
 
 function searchByTrait(people){
  
-  let traitName = promptFor("What type of trait do you want to search for: \ngender \ndob \nheight \nweight \neyeColor \noccupation ", chars);
-  let trait = promptFor('What trait do you want to search for?', chars);
+  let traitName = promptFor("What type of trait do you want to search for: \ngender \ndob \nheight \nweight \neyeColor \noccupation", chars);
+  let trait;
   let result;
 
   switch(traitName){
     case "gender":
      traitName = "gender";
+     trait = promptFor('Male or female?', chars);
      result = filterByTrait(people,traitName, trait);
      displayPeople(result);
      return result;
      break;
     case "dob":
       traitName="dob";
+      trait = promptFor('Please enter a date of birth. (mm/dd/yyyy)', date);
       result = filterByTrait(people,traitName, trait);
       displayPeople(result);
       return result;
       break;
     case "height":
       traitName="height";
+      trait = promptFor('Please enter a height in inches.', nums);
       result = filterByTrait(people,traitName, trait);
       displayPeople(result);
       return result;
       break;
     case "weight":
       traitName="weight";
+      trait = promptFor('Please enter a weight in pounds.', nums);
       result = filterByTrait(people,traitName, trait);
       displayPeople(result);
       return result;
       break;
     case "eyeColor":
       traitName="eyeColor"
+      trait = promptFor('Please enter an eye color.', chars);
       result = filterByTrait(people,traitName, trait);
       displayPeople(result);
       return result;
       break;
     case "occupation":
       traitName="occupation"
+      trait = promptFor('Please enter an occupation.', chars);
       result = filterByTrait(people,traitName, trait);
       displayPeople(result);
       return result;
@@ -139,7 +146,6 @@ function searchByTrait(people){
       app(people);
   }
   
-
 }
 
 function searchByTraits(people){
@@ -155,12 +161,12 @@ function searchByTraits(people){
 
     if (i >=1){
         displayPeople(result);
-        let searchAgain = promptFor("Would you like narrow down your search by entering an additional trait?", yesNo).toLowerCase();
+        let searchAgain = promptFor("Would you like to narrow down your search by entering an additional trait?", yesNo).toLowerCase();
         if(searchAgain === "no"){
-           break;
+            searchByName(result);
+            return result;
         }
 
-        
     }
     people = result;
   }
@@ -191,8 +197,8 @@ function displayPeople(people){
 function displayPerson(person){
   // print all of the information about a person:
   // height, weight, age, name, occupation, eye color.
-  let personInfo = "First Name: " + person.firstName + "\n";
-  personInfo += "Last Name: " + person.lastName + "\n";
+  let personInfo = "First Name: " + person[0].firstName + "\n";
+  personInfo += "Last Name: " + person[0].lastName + "\n";
   // TODO: finish getting the rest of the information to display
   alert(personInfo);
 }
@@ -210,16 +216,60 @@ function yesNo(input){
   return input.toLowerCase() == "yes" || input.toLowerCase() == "no";
 }
 
-// keep calling itself until no more parents are found
-function findDescendants(people, person){
 
+//return findDescendants(people, currentPerson, arrayOfFoundDescendants);
+// if within the array of people, the parameter of person A's id matches another person B's parent id
+// recursively call the function to see if person B is someone else's parent until no more is found.
+function findDescendants(people, person, arrayOfFoundDescendants)
+{
+  people.forEach(function(currentPerson)
+  {
+    currentPerson.parents.forEach(function(currentPersonParents)
+    {
+      if(currentPersonParents === person.id)
+      {
+        arrayOfFoundDescendants.push(currentPerson);
+        findDescendants(people, currentPerson, arrayOfFoundDescendants);
+      }
 
+    });
+      
+  });
+      return arrayOfFoundDescendants;
 }
 
 // only letters are accepted as input
 function chars(input){
   var letters = /^[A-Za-z]+$/;
   if(input.match(letters))
+  {
+    return true;
+  }
+  else
+  {
+    alert("Invalid input.")
+    return false;
+  }
+}
+
+// only numbers are accepted as input
+function nums(input){
+  var numbers = /^[0-9]+$/;
+  if(input.match(numbers))
+  {
+    return true;
+  }
+  else
+  {
+    alert("Invalid input.")
+    return false;
+  }
+}
+
+//only dates are accepted as input
+function date(input){
+  var date = /^(0[1-9]|1[012])[- /.](0[1-9]|[12][0-9]|3[01])[- /.](19|20)\d\d+$/;
+  if(input.match(date))
   {
     return true;
   }
